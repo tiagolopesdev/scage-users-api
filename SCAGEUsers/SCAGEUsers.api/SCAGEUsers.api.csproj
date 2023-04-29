@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SCAGEUsers.Application\SCAGEUsers.Application.csproj" />
+    <ProjectReference Include="..\SCAGEUsers.Infrastructure\SCAGEUsers.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
