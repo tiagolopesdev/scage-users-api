@@ -1,10 +1,17 @@
 using Microsoft.OpenApi.Models;
+using SCAGEUsers.Application.RepositorySide;
+using SCAGEUsers.Application.Service;
+using SCAGEUsers.Application.ServiceSide;
+using SCAGEUsers.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
