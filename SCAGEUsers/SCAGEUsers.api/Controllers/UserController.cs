@@ -17,10 +17,25 @@ namespace SCAGEUsers.api.Controllers
             this._userService = userService;
         }
 
-        [HttpGet("getAll")]
-        public async Task<ActionResult<UsersDto>> GetAllUsers()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RequestResponse>> GetUserById(Guid id)
         {
-            return Ok("Tudo ok");
+            try
+            {
+                if (string.IsNullOrEmpty(id.ToString())) return BadRequest(
+                        RequestResponse.Error(TypeAction.Obter, "Parametro id inválido")
+                     );
+
+                var response = await _userService.GetUserById(id);
+
+                return response == null ? 
+                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) : 
+                    Ok(RequestResponse.New("Usuário obtido com sucesso", response));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+            }
         }
 
         [HttpPost("createUser")]
@@ -34,34 +49,34 @@ namespace SCAGEUsers.api.Controllers
                 var response = await _userService.CreateUser(request);
 
                 return response != Guid.Empty ?
-                    Ok(RequestResponse.New("Usuário foi criado", response)) : 
-                    BadRequest(RequestResponse.New("Usuário não foi criado", response));
-            }
-            catch(Exception ex) 
-            {
-                return BadRequest(RequestResponse.Error(TypeAction.Criar, ex.Message));
-            }
-        }
-
-        [HttpPost("updateUser")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<RequestResponse>> UpdateUser([FromBody] UserCreateDto request)
-        {
-            try
-            {
-                var response = await _userService.CreateUser(request);
-
-                return response != Guid.Empty ?
                     Ok(RequestResponse.New("Usuário foi criado", response)) :
                     BadRequest(RequestResponse.New("Usuário não foi criado", response));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(RequestResponse.Error(TypeAction.Criar, ex.Message));
             }
         }
+
+        //[HttpPut("updateUser")]
+        //[Produces("application/json")]
+        //[ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        //[ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        //public async Task<ActionResult<RequestResponse>> UpdateUser([FromBody] UserUpdateDto request)
+        //{
+        //    try
+        //    {
+        //        var response = await _userService.UpdateUser(request);
+
+        //        return response != Guid.Empty ?
+        //            Ok(RequestResponse.New("Usuário foi criado", response)) :
+        //            BadRequest(RequestResponse.New("Usuário não foi criado", response));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
 
     }
 }

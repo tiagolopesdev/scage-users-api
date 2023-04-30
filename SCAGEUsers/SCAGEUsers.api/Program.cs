@@ -1,7 +1,9 @@
 using Microsoft.OpenApi.Models;
+using SCAGEUsers.Application.QuerySide;
 using SCAGEUsers.Application.RepositorySide;
 using SCAGEUsers.Application.Service;
 using SCAGEUsers.Application.ServiceSide;
+using SCAGEUsers.Infrastructure.Queries;
 using SCAGEUsers.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
+builder.Services.AddScoped<IUserQuery, UserQueries>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
