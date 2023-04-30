@@ -39,6 +39,26 @@ namespace SCAGEUsers.api.Controllers
             }
             catch(Exception ex) 
             {
+                return BadRequest(RequestResponse.Error(TypeAction.Criar, ex.Message));
+            }
+        }
+
+        [HttpPost("updateUser")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<RequestResponse>> UpdateUser([FromBody] UserCreateDto request)
+        {
+            try
+            {
+                var response = await _userService.CreateUser(request);
+
+                return response != Guid.Empty ?
+                    Ok(RequestResponse.New("Usuário foi criado", response)) :
+                    BadRequest(RequestResponse.New("Usuário não foi criado", response));
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex);
             }
         }

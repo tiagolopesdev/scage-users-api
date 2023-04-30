@@ -18,7 +18,7 @@ namespace SCAGEUsers.Application.Service
 
         public async Task<Guid> CreateUser(UserCreateDto request)
         {
-            var user = User.New(Guid.NewGuid(), request.Name, request.Email);
+            var user = User.New(Guid.NewGuid(), request.Name, request.Email, request.Sex);
 
             var response = await _userRepository.CreateUser(user);
 

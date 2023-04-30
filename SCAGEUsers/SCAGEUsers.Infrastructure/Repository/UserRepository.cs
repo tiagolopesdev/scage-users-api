@@ -28,12 +28,14 @@ namespace SCAGEUsers.Infrastructure.Repository
                             "id, " +
                             "name, " +
                             "email, " +
+                            "sex, " +
                             "createdOn, " +
                             "createdBy) " +
                         "VALUES(" +
                             "@id, " +
                             "@name, " +
                             "@email, " +
+                            "@sex, " +
                             "@createdOn, " +
                             "@createdBy);",
                         new
@@ -41,6 +43,7 @@ namespace SCAGEUsers.Infrastructure.Repository
                             id = user.Id,
                             name = user.Name,
                             email = user.Email,
+                            sex = user.Sex.ToString(),
                             createdOn = user.CreatedOn,
                             createdBy = user.CreatedBy
                         });
