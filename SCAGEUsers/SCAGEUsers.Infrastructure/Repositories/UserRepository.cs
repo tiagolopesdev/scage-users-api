@@ -56,5 +56,64 @@ namespace SCAGEUsers.Infrastructure.Repository
                 }
             }
         }
+
+        public async Task<User> GetUserById(Guid id)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var response = await connection.QueryAsync<User>(
+                        "SELECT " +
+                            "u.id as Id, " +
+                            "u.name as Name, " +
+                            "u.email as Email, " +
+                            "u.sex as Sex " +
+                        "FROM users as u " +
+                        "WHERE isEnable = 1 AND u.id = @id;", new { id });
+
+                    if (response.Count() == 0) return null;
+
+                    return response.ToList().FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<Guid> UpdateUser(User userExist)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var response = await connection.ExecuteAsync(
+                        "UPDATE users SET " +
+                            "name = @name, " +
+                            "email = @email, " +
+                            "sex = @sex, " +
+                            "modifiedOn = @modifiedOn, " +
+                            "modifiedBy = @modifiedBy " +
+                        "WHERE id = @id;", 
+                        new 
+                        { 
+                            name = userExist.Name,
+                            email = userExist.Email,
+                            sex = userExist.Sex.ToString(),
+                            modifiedOn = DateTime.Now,
+                            modifiedBy = Guid.NewGuid().ToString(),
+                            id = userExist.Id
+                        });
+
+                    return response == 1 ? userExist.Id : Guid.Empty;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

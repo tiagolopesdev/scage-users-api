@@ -30,5 +30,16 @@ namespace SCAGEUsers.Application.Service
         {
             return await _userQuery.GetUserById(id);
         }
+
+        public async Task<Guid> UpdateUser(UserUpdateDto request)
+        {
+            var userExist = await _userRepository.GetUserById(request.Id);
+
+            if (userExist == null) throw new System.ArgumentException("Usuário não encontrado para atualizar");
+
+            userExist.Update(request.Name, request.Email, request.Sex, request.IsEnable);
+
+            return await _userRepository.UpdateUser(userExist);
+        }
     }
 }

@@ -27,8 +27,16 @@ namespace SCAGEUsers.Application.AggregateRoot
                 IsEnable = isEnable,
                 CreatedOn = DateTime.Now,
                 CreatedBy = Guid.NewGuid(),
-            }; 
+            };
             return user;
+        }
+
+        public void Update(string name, string email, Sex sex, bool isEnable)
+        {
+            Name = name;
+            Email = email;
+            Sex = sex;
+            IsEnable = isEnable;
         }
     }
 }

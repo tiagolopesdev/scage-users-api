@@ -28,8 +28,8 @@ namespace SCAGEUsers.api.Controllers
 
                 var response = await _userService.GetUserById(id);
 
-                return response == null ? 
-                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) : 
+                return response == null ?
+                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) :
                     Ok(RequestResponse.New("Usuário obtido com sucesso", response));
             }
             catch (Exception ex)
@@ -58,25 +58,25 @@ namespace SCAGEUsers.api.Controllers
             }
         }
 
-        //[HttpPut("updateUser")]
-        //[Produces("application/json")]
-        //[ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
-        //[ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
-        //public async Task<ActionResult<RequestResponse>> UpdateUser([FromBody] UserUpdateDto request)
-        //{
-        //    try
-        //    {
-        //        var response = await _userService.UpdateUser(request);
+        [HttpPut("updateUser")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<RequestResponse>> UpdateUser([FromBody] UserUpdateDto request)
+        {
+            try
+            {
+                var response = await _userService.UpdateUser(request);
 
-        //        return response != Guid.Empty ?
-        //            Ok(RequestResponse.New("Usuário foi criado", response)) :
-        //            BadRequest(RequestResponse.New("Usuário não foi criado", response));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //}
+                return response != Guid.Empty ?
+                    Ok(RequestResponse.New("Usuário foi criado", response)) :
+                    BadRequest(RequestResponse.New("Usuário não foi criado", response));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(RequestResponse.Error(TypeAction.Atualizar, ex.Message));
+            }
+        }
 
     }
 }
