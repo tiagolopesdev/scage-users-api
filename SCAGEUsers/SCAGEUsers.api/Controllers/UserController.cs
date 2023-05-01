@@ -18,6 +18,10 @@ namespace SCAGEUsers.api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<RequestResponse>> GetUserById(Guid id)
         {
             try
