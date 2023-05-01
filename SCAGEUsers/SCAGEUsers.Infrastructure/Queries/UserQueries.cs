@@ -6,6 +6,7 @@ using SCAGEUsers.Application.AggregateRoot;
 using SCAGEUsers.Application.DTO;
 using SCAGEUsers.Application.Extension;
 using SCAGEUsers.Application.QuerySide;
+using SCAGEUsers.Application.VO;
 
 namespace SCAGEUsers.Infrastructure.Queries
 {
@@ -68,20 +69,28 @@ namespace SCAGEUsers.Infrastructure.Queries
             }
         }
 
-        public async Task<List<UsersDto>> GetUsersByName(string name)
+        public async Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sexParam)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 try
                 {
+                    string isExistSex = !string.IsNullOrEmpty(sexParam.ToString()) ? " AND u.sex = @sex" : string.Empty;
+
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
                             "u.name as Name, " +
                             "u.email as Email, " +
                             "u.sex as Sex " +
                         "FROM users as u " +
-                        "WHERE isEnable = 1 AND u.name LIKE @name;",
-                        new { name = $"%{name}%" });
+                        "WHERE isEnable = 1 AND " +
+                            "u.name LIKE @name" +
+                            $"{isExistSex}",
+                        new
+                        {
+                            name = $"%{name}%",
+                            sex = sexParam.ToString()
+                        });
 
                     return response.ToList().ToDtoList();
                 }

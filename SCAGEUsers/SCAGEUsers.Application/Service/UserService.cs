@@ -3,6 +3,7 @@ using SCAGEUsers.Application.DTO;
 using SCAGEUsers.Application.QuerySide;
 using SCAGEUsers.Application.RepositorySide;
 using SCAGEUsers.Application.ServiceSide;
+using SCAGEUsers.Application.VO;
 
 namespace SCAGEUsers.Application.Service
 {
@@ -57,9 +58,9 @@ namespace SCAGEUsers.Application.Service
             return await _userQuery.GetAllUsers();
         }
 
-        public async Task<List<UsersDto>> GetUsersByName(string name)
+        public async Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sex)
         {
-            return await _userQuery.GetUsersByName(name);
+            return await _userQuery.GetUsersByFilters(name, sex);
         }
     }
 }

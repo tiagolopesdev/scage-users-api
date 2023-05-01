@@ -1,5 +1,6 @@
 ﻿
 using SCAGEUsers.Application.DTO;
+using SCAGEUsers.Application.VO;
 
 namespace SCAGEUsers.Application.QuerySide
 {
@@ -7,6 +8,6 @@ namespace SCAGEUsers.Application.QuerySide
     {
         public Task<List<UsersDto>?> GetAllUsers();
         public Task<UsersDto> GetUserById(Guid id);
-        public Task<List<UsersDto>> GetUsersByName(string name);
+        public Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sex);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SCAGEUsers.Application.DTO;
+using SCAGEUsers.Application.VO;
 
 namespace SCAGEUsers.Application.ServiceSide
 {
@@ -7,7 +8,7 @@ namespace SCAGEUsers.Application.ServiceSide
         public Task<Guid> CreateUser(UserCreateDto request);
         public Task<List<UsersDto>?> GetAllUsers();
         public Task<UsersDto> GetUserById(Guid id);
-        public Task<List<UsersDto>> GetUsersByName(string name);
+        public Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sex);
         public Task<Guid> UpdateUser(UserUpdateDto request);
     }
 }

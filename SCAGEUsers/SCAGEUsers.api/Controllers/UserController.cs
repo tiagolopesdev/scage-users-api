@@ -3,6 +3,7 @@ using SCAGEUsers.Application.DTO;
 using SCAGEUsers.Application.ServiceSide;
 using System.Net;
 using SCAGEUsers.Application.Utils;
+using SCAGEUsers.Application.VO;
 
 namespace SCAGEUsers.api.Controllers
 {
@@ -17,16 +18,16 @@ namespace SCAGEUsers.api.Controllers
             this._userService = userService;
         }
 
-        [HttpGet("/name/{name}")]
+        [HttpGet("filters")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<RequestResponse>> GetUsersByName(string name)
+        public async Task<ActionResult<RequestResponse>> GetUsersByFilters([FromQuery] string name, [FromQuery] Sex? sex)
         {
             try
             {
-                var response = await _userService.GetUsersByName(name);
+                var response = await _userService.GetUsersByFilters(name, sex);
 
                 return response == null ?
                     BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuários não encontrados")) :
