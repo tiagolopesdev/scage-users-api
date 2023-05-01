@@ -51,5 +51,15 @@ namespace SCAGEUsers.Application.Service
 
             return await _userRepository.UpdateUser(userExist);
         }
+
+        public async Task<List<UsersDto>?> GetAllUsers()
+        {
+            return await _userQuery.GetAllUsers();
+        }
+
+        public async Task<List<UsersDto>> GetUsersByName(string name)
+        {
+            return await _userQuery.GetUsersByName(name);
+        }
     }
 }

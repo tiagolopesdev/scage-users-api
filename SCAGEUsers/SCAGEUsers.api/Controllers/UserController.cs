@@ -17,6 +17,27 @@ namespace SCAGEUsers.api.Controllers
             this._userService = userService;
         }
 
+        [HttpGet("/name/{name}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.NoContent)]
+        public async Task<ActionResult<RequestResponse>> GetUsersByName(string name)
+        {
+            try
+            {
+                var response = await _userService.GetUsersByName(name);
+
+                return response == null ?
+                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuários não encontrados")) :
+                    Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+            }
+        }
+
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
@@ -53,7 +74,7 @@ namespace SCAGEUsers.api.Controllers
                 var response = await _userService.GetUserById(id);
 
                 return response == null ?
-                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) :
+                    NotFound(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) :
                     Ok(RequestResponse.New("Usuário obtido com sucesso", response));
             }
             catch (Exception ex)

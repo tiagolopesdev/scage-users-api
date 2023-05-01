@@ -11,5 +11,15 @@ namespace SCAGEUsers.Application.Extension
 
             return usersDto;
         }
+        public static List<UsersDto> ToDtoList(this IEnumerable<User> user)
+        {
+            var listReturn = new List<UsersDto>();
+
+            foreach (var item in user)
+            {
+                listReturn.Add(new UsersDto(item.Name, item.Email, item.Sex));
+            }
+            return listReturn;
+        }
     }
 }

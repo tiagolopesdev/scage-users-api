@@ -42,5 +42,54 @@ namespace SCAGEUsers.Infrastructure.Queries
                 }
             }
         }
+
+        public async Task<List<UsersDto>?> GetAllUsers()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var response = await connection.QueryAsync<User>(
+                        "SELECT " +
+                            "u.name as Name, " +
+                            "u.email as Email, " +
+                            "u.sex as Sex " +
+                        "FROM users as u " +
+                        "WHERE isEnable = 1;");
+
+                    if (response.Count() == 0) return null;
+
+                    return response.ToList().ToDtoList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<List<UsersDto>> GetUsersByName(string name)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var response = await connection.QueryAsync<User>(
+                        "SELECT " +
+                            "u.name as Name, " +
+                            "u.email as Email, " +
+                            "u.sex as Sex " +
+                        "FROM users as u " +
+                        "WHERE isEnable = 1 AND u.name LIKE @name;",
+                        new { name = $"%{name}%" });
+
+                    return response.ToList().ToDtoList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }
