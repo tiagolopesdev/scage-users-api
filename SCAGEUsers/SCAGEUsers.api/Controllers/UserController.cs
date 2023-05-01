@@ -30,12 +30,12 @@ namespace SCAGEUsers.api.Controllers
                 var response = await _userService.GetUsersByFilters(name, sex);
 
                 return response == null ?
-                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuários não encontrados")) :
+                    BadRequest(RequestResponse.Error("Usuários não encontrados")) :
                     Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
             }
             catch (Exception ex)
             {
-                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+                return BadRequest(RequestResponse.Error(ex.Message));
             }
         }
 
@@ -50,12 +50,12 @@ namespace SCAGEUsers.api.Controllers
                 var response = await _userService.GetAllUsers();
 
                 return response == null ?
-                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuários não encontrados")) :
+                    BadRequest(RequestResponse.Error("Usuários não encontrados")) :
                     Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
             }
             catch (Exception ex)
             {
-                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+                return BadRequest(RequestResponse.Error(ex.Message));
             }
         }
 
@@ -69,18 +69,18 @@ namespace SCAGEUsers.api.Controllers
             try
             {
                 if (string.IsNullOrEmpty(id.ToString())) return BadRequest(
-                        RequestResponse.Error(TypeAction.Obter, "Parametro id inválido")
+                        RequestResponse.Error("Parametro id inválido")
                      );
 
                 var response = await _userService.GetUserById(id);
 
                 return response == null ?
-                    NotFound(RequestResponse.Error(TypeAction.Obter, "Usuário não encontrado")) :
+                    NotFound(RequestResponse.Error("Usuário não encontrado")) :
                     Ok(RequestResponse.New("Usuário obtido com sucesso", response));
             }
             catch (Exception ex)
             {
-                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+                return BadRequest(RequestResponse.Error(ex.Message));
             }
         }
 
@@ -100,7 +100,7 @@ namespace SCAGEUsers.api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(RequestResponse.Error(TypeAction.Criar, ex.Message));
+                return BadRequest(RequestResponse.Error(ex.Message));
             }
         }
 
@@ -120,7 +120,7 @@ namespace SCAGEUsers.api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(RequestResponse.Error(TypeAction.Atualizar, ex.Message));
+                return BadRequest(RequestResponse.Error(ex.Message));
             }
         }
 

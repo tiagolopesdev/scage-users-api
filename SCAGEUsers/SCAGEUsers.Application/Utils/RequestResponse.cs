@@ -6,9 +6,9 @@ namespace SCAGEUsers.Application.Utils
         public string Message { get; set; }
         public object Data { get; set; }
 
-        public static string Error(TypeAction typeAction, string message)
+        public static string Error(string message)
         {
-            return "Erro ao "+ typeAction.ToString() +": " + message;
+            return message;
         }
 
         public static RequestResponse New(string message, object data)
