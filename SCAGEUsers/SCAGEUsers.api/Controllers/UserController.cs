@@ -17,6 +17,26 @@ namespace SCAGEUsers.api.Controllers
             this._userService = userService;
         }
 
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<RequestResponse>> GetAllUsers()
+        {
+            try
+            {
+                var response = await _userService.GetAllUsers();
+
+                return response == null ?
+                    BadRequest(RequestResponse.Error(TypeAction.Obter, "Usuários não encontrados")) :
+                    Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(RequestResponse.Error(TypeAction.Obter, ex.Message));
+            }
+        }
+
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
