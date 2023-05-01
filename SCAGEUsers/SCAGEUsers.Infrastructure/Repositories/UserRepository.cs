@@ -115,5 +115,42 @@ namespace SCAGEUsers.Infrastructure.Repository
                 }
             }
         }
+
+        public async Task<User?> GetUserByNameOrEmail(string name, string email)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    string nameToUpper = name.ToUpper();
+                    string emailToUpper = email.ToUpper();
+
+                    var response = await connection.QueryAsync<User>(
+                        "SELECT " +
+                            "u.id as Id, " +
+                            "u.name as Name, " +
+                            "u.email as Email, " +
+                            "u.sex as Sex " +
+                        "FROM users as u " +
+                        "WHERE " +
+                            "isEnable = 1 AND " +
+                            "UPPER(u.name) = @name OR " +
+                            "UPPER(u.email) = @email", 
+                        new 
+                        { 
+                            name = nameToUpper, 
+                            email = emailToUpper 
+                        });
+
+                    return response.Count() == 0 ? 
+                        null :
+                        response.ToList().FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

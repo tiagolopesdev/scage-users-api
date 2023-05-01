@@ -7,6 +7,7 @@ namespace SCAGEUsers.Application.RepositorySide
     {
         public Task<Guid> CreateUser(User user);
         public Task<User> GetUserById(Guid id);
+        public Task<User?> GetUserByNameOrEmail(string name, string email);
         public Task<Guid> UpdateUser(User userExist);
     }
 }
