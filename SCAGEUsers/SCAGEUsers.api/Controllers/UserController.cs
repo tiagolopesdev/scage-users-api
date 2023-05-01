@@ -22,16 +22,13 @@ namespace SCAGEUsers.api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<RequestResponse>> GetUsersByFilters([FromQuery] string name, [FromQuery] Sex? sex)
         {
             try
             {
                 var response = await _userService.GetUsersByFilters(name, sex);
 
-                return response == null ?
-                    BadRequest(RequestResponse.Error("Usuários não encontrados")) :
-                    Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
+                return Ok(RequestResponse.New("Usuários obtidos com sucesso", response));
             }
             catch (Exception ex)
             {
