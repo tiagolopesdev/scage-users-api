@@ -5,6 +5,7 @@ using SCAGEUsers.Application.Service;
 using SCAGEUsers.Application.ServiceSide;
 using SCAGEUsers.Infrastructure.Queries;
 using SCAGEUsers.Infrastructure.Repository;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,10 @@ builder.Services.AddScoped<IUserQuery, UserQueries>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
