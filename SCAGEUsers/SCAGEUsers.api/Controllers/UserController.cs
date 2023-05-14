@@ -112,8 +112,8 @@ namespace SCAGEUsers.api.Controllers
                 var response = await _userService.UpdateUser(request);
 
                 return response != Guid.Empty ?
-                    Ok(RequestResponse.New("Usuário foi criado", response)) :
-                    BadRequest(RequestResponse.New("Usuário não foi criado", response));
+                    Ok(RequestResponse.New("Usuário foi atualizado", response)) :
+                    BadRequest(RequestResponse.New("Usuário não foi atualizado", response));
             }
             catch (Exception ex)
             {

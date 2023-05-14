@@ -27,6 +27,7 @@ namespace SCAGEUsers.Infrastructure.Queries
                 {
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
+                            "u.id as Id, " +
                             "u.name as Name, " +
                             "u.email as Email, " +
                             "u.sex as Sex " +
@@ -52,6 +53,7 @@ namespace SCAGEUsers.Infrastructure.Queries
                 {
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
+                            "u.id as Id, " +
                             "u.name as Name, " +
                             "u.email as Email, " +
                             "u.sex as Sex " +
@@ -79,6 +81,7 @@ namespace SCAGEUsers.Infrastructure.Queries
 
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
+                            "u.id as Id, " +
                             "u.name as Name, " +
                             "u.email as Email, " +
                             "u.sex as Sex " +

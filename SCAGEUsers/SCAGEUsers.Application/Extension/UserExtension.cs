@@ -7,7 +7,7 @@ namespace SCAGEUsers.Application.Extension
     {
         public static UsersDto ToDto(this User user)
         {
-            var usersDto = new UsersDto(user.Name, user.Email, user.Sex);
+            var usersDto = new UsersDto(user.Id, user.Name, user.Email, user.Sex);
 
             return usersDto;
         }
@@ -17,7 +17,7 @@ namespace SCAGEUsers.Application.Extension
 
             foreach (var item in user)
             {
-                listReturn.Add(new UsersDto(item.Name, item.Email, item.Sex));
+                listReturn.Add(new UsersDto(item.Id, item.Name, item.Email, item.Sex));
             }
             return listReturn;
         }
