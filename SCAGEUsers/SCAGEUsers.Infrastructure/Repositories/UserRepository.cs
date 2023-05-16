@@ -116,14 +116,13 @@ namespace SCAGEUsers.Infrastructure.Repository
             }
         }
 
-        public async Task<User?> GetUserByNameOrEmail(string name, string email)
+        public async Task<User?> GetUserByNameOrEmail(string name, string email, Guid? id)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 try
                 {
-                    string nameToUpper = name.ToUpper();
-                    string emailToUpper = email.ToUpper();
+                    string conditionId = id != Guid.Empty ? " u.id NOT IN (@idUser) " : string.Empty;
 
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
@@ -134,12 +133,15 @@ namespace SCAGEUsers.Infrastructure.Repository
                         "FROM users as u " +
                         "WHERE " +
                             "isEnable = 1 AND " +
-                            "UPPER(u.name) = @name OR " +
-                            "UPPER(u.email) = @email", 
+                            $"{conditionId}" +
+                            "AND u.name = (SELECT " +
+                                "us.name FROM users as us " +
+                                "WHERE us.name = @name OR us.email = @email) ",
                         new 
                         { 
-                            name = nameToUpper, 
-                            email = emailToUpper 
+                            name,
+                            email,
+                            idUser = id
                         });
 
                     return response.Count() == 0 ? 

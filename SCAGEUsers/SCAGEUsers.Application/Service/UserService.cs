@@ -20,7 +20,7 @@ namespace SCAGEUsers.Application.Service
 
         public async Task<Guid> CreateUser(UserCreateDto request)
         {
-            var userExist = await _userRepository.GetUserByNameOrEmail(request.Name, request.Email) ;
+            var userExist = await _userRepository.GetUserByNameOrEmail(request.Name, request.Email);
 
             if (userExist != null) throw new ArgumentException("Usuário com nome " 
                 + request.Name +" ou email "+ request.Email +" já existe");
@@ -39,11 +39,9 @@ namespace SCAGEUsers.Application.Service
 
         public async Task<Guid> UpdateUser(UserUpdateDto request)
         {
-            var userExist = await _userRepository.GetUserById(request.Id);
-
-            if (userExist == null) throw new ArgumentException("Usuário não encontrado para atualizar");
-
-            var userByNameOrEmailExist = await _userRepository.GetUserByNameOrEmail(request.Name, request.Email);
+            var userExist = await _userRepository.GetUserById(request.Id) ?? throw new ArgumentException("Usuário não encontrado para atualizar");
+            
+            var userByNameOrEmailExist = await _userRepository.GetUserByNameOrEmail(request.Name, request.Email, userExist.Id);
 
             if (userByNameOrEmailExist != null) throw new ArgumentException("Usuário com nome "
                 + request.Name + " ou email " + request.Email + " já existe");
