@@ -94,6 +94,7 @@ namespace SCAGEUsers.Infrastructure.Repository
                             "name = @name, " +
                             "email = @email, " +
                             "sex = @sex, " +
+                            "isEnable = @isEnable, " +
                             "modifiedOn = @modifiedOn, " +
                             "modifiedBy = @modifiedBy " +
                         "WHERE id = @id;", 
@@ -102,6 +103,7 @@ namespace SCAGEUsers.Infrastructure.Repository
                             name = userExist.Name,
                             email = userExist.Email,
                             sex = userExist.Sex.ToString(),
+                            isEnable = userExist.IsEnable,
                             modifiedOn = DateTime.Now,
                             modifiedBy = Guid.NewGuid().ToString(),
                             id = userExist.Id
