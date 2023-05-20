@@ -13,9 +13,11 @@ namespace SCAGEUsers.Application.Extension
         }
         public static List<UsersDto> ToDtoList(this IEnumerable<User> user)
         {
+            var userOrder = user.OrderByDescending(item => item.CreatedOn.Date);
+
             var listReturn = new List<UsersDto>();
 
-            foreach (var item in user)
+            foreach (var item in userOrder)
             {
                 listReturn.Add(new UsersDto(item.Id, item.Name, item.Email, item.Sex));
             }

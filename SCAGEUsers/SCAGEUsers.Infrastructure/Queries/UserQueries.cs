@@ -56,7 +56,8 @@ namespace SCAGEUsers.Infrastructure.Queries
                             "u.id as Id, " +
                             "u.name as Name, " +
                             "u.email as Email, " +
-                            "u.sex as Sex " +
+                            "u.sex as Sex, " +
+                            "u.createdOn as CreatedOn " +
                         "FROM users as u " +
                         "WHERE isEnable = 1;");
 
@@ -84,7 +85,8 @@ namespace SCAGEUsers.Infrastructure.Queries
                             "u.id as Id, " +
                             "u.name as Name, " +
                             "u.email as Email, " +
-                            "u.sex as Sex " +
+                            "u.sex as Sex, " +
+                            "u.createdOn as CreatedOn " +
                         "FROM users as u " +
                         "WHERE isEnable = 1 AND " +
                             "u.name LIKE @name" +
