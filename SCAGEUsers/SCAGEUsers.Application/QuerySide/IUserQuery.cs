@@ -8,6 +8,6 @@ namespace SCAGEUsers.Application.QuerySide
     {
         public Task<List<UsersDto>?> GetAllUsers();
         public Task<UsersDto> GetUserById(Guid id);
-        public Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sex);
+        public Task<List<UsersDto>> GetUsersByFilters(string? name, Sex? sex);
     }
 }

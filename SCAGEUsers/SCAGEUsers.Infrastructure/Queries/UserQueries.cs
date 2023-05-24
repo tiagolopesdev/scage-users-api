@@ -72,13 +72,14 @@ namespace SCAGEUsers.Infrastructure.Queries
             }
         }
 
-        public async Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sexParam)
+        public async Task<List<UsersDto>> GetUsersByFilters(string? name, Sex? sexParam)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 try
                 {
                     string isExistSex = !string.IsNullOrEmpty(sexParam.ToString()) ? " AND u.sex = @sex" : string.Empty;
+                    string isExistName = !string.IsNullOrEmpty(name) ? " AND u.name LIKE @name " : string.Empty;
 
                     var response = await connection.QueryAsync<User>(
                         "SELECT " +
@@ -88,8 +89,8 @@ namespace SCAGEUsers.Infrastructure.Queries
                             "u.sex as Sex, " +
                             "u.createdOn as CreatedOn " +
                         "FROM users as u " +
-                        "WHERE isEnable = 1 AND " +
-                            "u.name LIKE @name" +
+                        "WHERE isEnable = 1 " +
+                            $"{isExistName}" +
                             $"{isExistSex}",
                         new
                         {

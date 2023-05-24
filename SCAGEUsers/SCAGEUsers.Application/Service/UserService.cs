@@ -56,7 +56,7 @@ namespace SCAGEUsers.Application.Service
             return await _userQuery.GetAllUsers();
         }
 
-        public async Task<List<UsersDto>> GetUsersByFilters(string name, Sex? sex)
+        public async Task<List<UsersDto>> GetUsersByFilters(string? name, Sex? sex)
         {
             return await _userQuery.GetUsersByFilters(name, sex);
         }

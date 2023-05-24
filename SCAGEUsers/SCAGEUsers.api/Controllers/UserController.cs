@@ -22,7 +22,7 @@ namespace SCAGEUsers.api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(RequestResponse), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<RequestResponse>> GetUsersByFilters([FromQuery] string name, [FromQuery] Sex? sex)
+        public async Task<ActionResult<RequestResponse>> GetUsersByFilters([FromQuery] string? name, [FromQuery] Sex? sex)
         {
             try
             {
