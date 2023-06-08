@@ -1,25 +1,59 @@
+using Microsoft.OpenApi.Models;
+using SCAGEUsers.Application.QuerySide;
+using SCAGEUsers.Application.RepositorySide;
+using SCAGEUsers.Application.Service;
+using SCAGEUsers.Application.ServiceSide;
+using SCAGEUsers.Infrastructure.Queries;
+using SCAGEUsers.Infrastructure.Repository;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+builder.Services.AddScoped<IUserQuery, UserQueries>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "users API",
+        Description = "Api builded using DDD pattern",
+        Contact = new OpenApiContact
+        {
+            Name = "Tiago Lopes",
+            Email = "saxtiago14@gmail.com",
+            Url = new Uri("https://www.linkedin.com/in/tiagolopesdev"),           
+        }        
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(opt =>
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    opt.RoutePrefix = string.Empty;
+    opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
+
+app.UseCors();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
