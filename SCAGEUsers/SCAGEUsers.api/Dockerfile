@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["SCAGEUsers/SCAGEUsers.api/SCAGEUsers.api.csproj", "SCAGEUsers.api/"]
 COPY ["SCAGEUsers/SCAGEUsers.Application/SCAGEUsers.Application.csproj", "SCAGEUsers/SCAGEUsers.Application/"]
 COPY ["SCAGEUsers/SCAGEUsers.Infrastructure/SCAGEUsers.Infrastructure.csproj", "SCAGEUsers/SCAGEUsers.Infrastructure/"]
-RUN dotnet restore "SCAGEUsers.api/SCAGEUsers.api.csproj"
+RUN dotnet restore "tiagolopesdocker/scage-users:tagnameSCAGEUsers.api/SCAGEUsers.api.csproj"
 COPY . .
 WORKDIR "/src/SCAGEUsers/SCAGEUsers.api"
 RUN dotnet build "SCAGEUsers.api.csproj" -c Release -o /app/build
