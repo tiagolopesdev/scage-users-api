@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["SCAGEUsers/SCAGEUsers.api/SCAGEUsers.api.csproj", "SCAGEUsers.api/"]
 COPY ["SCAGEUsers/SCAGEUsers.Application/SCAGEUsers.Application.csproj", "SCAGEUsers/SCAGEUsers.Application/"]
-COPY ["SCAGEUsers.Infrastructure/SCAGEUsers.Infrastructure.csproj", "SCAGEUsers.Infrastructure/"]
+COPY ["SCAGEUsers.Infrastructure/SCAGEUsers.Infrastructure.csproj", "SCAGEUsers/SCAGEUsers.Infrastructure/"]
 # COPY ["SCAGEUsers/SCAGEUsers.Infrastructure/SCAGEUsers.Infrastructure.csproj", "SCAGEUsers/SCAGEUsers.Infrastructure/"]
 RUN dotnet restore "tiagolopesdocker/scage-users:tagnameSCAGEUsers.api/SCAGEUsers.api.csproj"
 COPY . .
