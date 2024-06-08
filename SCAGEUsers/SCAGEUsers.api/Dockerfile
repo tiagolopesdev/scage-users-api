@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["SCAGEUsers/SCAGEUsers.api/SCAGEUsers.api.csproj", "SCAGEUsers/SCAGEUsers.api/"]
+COPY ["SCAGEUsers/SCAGEUsers.api/SCAGEUsers.api.csproj", "SCAGEUsers.api/"]
 COPY ["SCAGEUsers/SCAGEUsers.Application/SCAGEUsers.Application.csproj", "SCAGEUsers/SCAGEUsers.Application/"]
 COPY ["SCAGEUsers/SCAGEUsers.Infrastructure/SCAGEUsers.Infrastructure.csproj", "SCAGEUsers/SCAGEUsers.Infrastructure/"]
-RUN dotnet restore "SCAGEUsers/SCAGEUsers.api/SCAGEUsers.api.csproj"
+RUN dotnet restore "SCAGEUsers.api/SCAGEUsers.api.csproj"
 COPY . .
 WORKDIR "/src/SCAGEUsers/SCAGEUsers.api"
 RUN dotnet build "SCAGEUsers.api.csproj" -c Release -o /app/build
